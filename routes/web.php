@@ -33,3 +33,4 @@ Route::get('twitterUserTimeLine', 'TwitterController@twitterUserTimeLine');
 
 Route::get('/tweets/{id}', 'TwitterController@getUserRecentTweets');
 Route::get('/hide-tweet/{id}', 'TwitterController@markTweetAsHidden');
+Route::get('/unhide-tweet/{id}', 'TwitterController@unhideTweet');

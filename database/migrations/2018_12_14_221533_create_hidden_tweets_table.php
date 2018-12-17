@@ -15,7 +15,7 @@ class CreateHiddenTweetsTable extends Migration
     {
         Schema::create('hidden_tweets', function (Blueprint $table) {
             $table->primary('id_tweet'); // id record
-            $table->bigInteger('id_tweet'); // id record
+            $table->string('id_tweet'); // id record
             $table->integer('author');
             $table->char('is_hidden',1);
             $table->timestamps();

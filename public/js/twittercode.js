@@ -30,15 +30,22 @@ function getTweetDOMCard(tweetObj, isHidden){
         '<h6 class="card-subtitle mb-2 text-muted">' + parseTwitterDate( tweetObj.created_at ) + '</h6>' +
         '<p class="card-text">'+ tweetObj.text +'</p>' +
       '</div>' +
+
+
+      // '<div class="row">' + tweetObj.id_str + '</div>' +
+
+
     '</div>'; // +
 
-if( tweetObj.hasOwnProperty('isHidden')){
-  if(isHidden === true){
-    tweet += '<a href="#" onclick="unhide( '+ tweetObj.id +' )" class="card-link">Unhide</a>';
-  }else{
-    tweet += '<a href="#" onclick="hide('+ tweetObj.id +')" class="card-link">Hide</a>';
+  if( tweetObj.hasOwnProperty('isMyTweetAccount') && tweetObj['isMyTweetAccount'] === true ){
+    if(isHidden === true){
+      tweet += '<a href="#" onclick="unhide(  \''+ tweetObj.id_str +'\' )" class="card-link">Unhide</a>';
+    }else{
+      tweet += '<a href="#" onclick="hide( \''+ tweetObj.id_str +'\')" class="card-link">Hide</a>';
+    }
+  } else {
+    console.log('is not my tweet account');
   }
-}
 
 
 
@@ -70,7 +77,6 @@ function parseTwitterDate(tdate) {
     return "on " + system_date;
 }
 
-// from http://widgets.twimg.com/j/1/widget.js
 var K = function () {
     var a = navigator.userAgent;
     return {
@@ -91,28 +97,26 @@ function hide(id){
       //update DOM to show unhide function
       //TODO
 
-        
+
 
 
   }).fail(function(){
-    console.log('Error loading tweets');
+    console.log('Error hiding tweet');
   });
 
 }
 
-function unhide(){
+function unhide( id ){
 
-  $.get( "/tweets/" + id, function( data ) {
+  $.get( "/unhide-tweet/" + id, function( data ) {
       console.log( data );
       console.log('Loaded');
 
-      data.map(function(tw){
-        getTweetDOMCard(tw, tw.isHidden);
-      });
+
 
 
   }).fail(function(){
-    console.log('Error loading tweets');
+    console.log('Error unhiding tweets');
   });
 
 }
