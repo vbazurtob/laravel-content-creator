@@ -11,14 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('main');
-});
+// Route::get('/', function () {
+//     return view('main');
+// });
 
 Auth::routes();
 
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::redirect('/', '/index');
+Route::redirect('/home', '/index');
+Route::get('/index', 'HomeController@index')->name('index');
 Route::get('/create-entry', 'EntryController@create')->name('create-entry');
 Route::post('/create-entry', 'EntryController@store')->name('create-entry');
 

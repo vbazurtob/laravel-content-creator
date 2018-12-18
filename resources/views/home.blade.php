@@ -19,9 +19,11 @@
           </div>
         </div>
 
-        @if(Auth::user()->id == $entry->author)
-        <a href="/entry/{{$entry->entry_id}}" class="card-link">Edit</a>
-        @endif
+        @auth
+          @if(Auth::user()->id == $entry->author)
+            <a href="/entry/{{$entry->entry_id}}" class="card-link">Edit</a>
+          @endif
+        @endauth
       </div>
 
     </div>

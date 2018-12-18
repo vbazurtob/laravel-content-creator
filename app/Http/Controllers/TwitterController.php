@@ -7,7 +7,6 @@ use App\User;
 use App\HiddenTweet;
 use Twitter;
 use Illuminate\Support\Facades\DB;
-// use Illuminate\Support\Facades\Auth;
 
 class TwitterController extends Controller
 {
@@ -38,10 +37,10 @@ class TwitterController extends Controller
           if ( $this->userIsCurrentLoggedOne($id) ){ // Generate hide/unhide links
               $data[$key]['isMyTweetAccount'] = true;
 
-              $data[$key]['isHidden'] = $this->isTweetHidden( $tweet['id_str'], $id );
+              $data[$key]['isHidden'] = HiddenTweet::isTweetHidden( $tweet['id_str'], $id );
           }else{
 
-            if($this->isTweetHidden( $tweet['id_str'], $id ) == true) {
+            if( HiddenTweet::isTweetHidden( $tweet['id_str'], $id ) == true) {
               array_push($keysToBeDeleted, $key);
             }
           }
@@ -55,81 +54,20 @@ class TwitterController extends Controller
 
 
       } else {
-
-
-
         $data = [];
       }
-
-
-
 
        return response()->json($data, 201);
     }
 
     public function markTweetAsHidden(Request $request, $tweet_id){
       $currentUser = auth()->user()->id;
-
-
-      $hiddenTweetObj = HiddenTweet::find($tweet_id);
-      if( isset( $hiddenTweetObj ) ){
-        if($hiddenTweetObj->is_hidden != 'S'){
-          $hiddenTweetObj->is_hidden = 'S';
-          $hiddenTweetObj->update();
-        }
-      } else {
-        $newHiddenTweet = new HiddenTweet(
-          [
-            'id_tweet' => $tweet_id,
-            'is_hidden' => 'S',
-            'author' => $currentUser
-          ]
-        );
-        $newHiddenTweet->save();
-        $hiddenTweetObj = $newHiddenTweet;
-      }
-
-      return response()->json(['id'=> $hiddenTweetObj], 201);
+      return response()->json(['id'=> HiddenTweet::markTweetAsHidden( $currentUser, $tweet_id) ], 201);
     }
 
     public function unhideTweet(Request $request, $tweet_id){
-      //Update state
-      $hiddenTweetObj = HiddenTweet::find($tweet_id);
-      if( isset( $hiddenTweetObj ) ){
-        if($hiddenTweetObj->is_hidden == 'S'){
-          $hiddenTweetObj->is_hidden = 'N';
-
-          $hiddenTweetObj->update();
-        }
-      }
-
-
-      return response()->json(['id'=> $hiddenTweetObj], 201);
+      return response()->json(['id'=> HiddenTweet::unhideTweet($tweet_id)], 201);
     }
-
-    private function isTweetHidden($tweet_id, $author){
-      DB::enableQueryLog();
-      $hiddenTweetQuery = DB::table('hidden_tweets')
-      ->where([
-                          ['id_tweet', '=', $tweet_id ],
-                          ['author', '=', $author ],
-                          ['is_hidden',  '=', 'S']
-                      ])
-
-      ->first();
-
-
-
-      if(isset($hiddenTweetQuery)){
-        return ($hiddenTweetQuery->is_hidden == 'S') ? true : false ;
-      }else{
-        return false;
-      }
-
-
-    }
-
-
 
     private function userIsCurrentLoggedOne($userId){
         return $userId == auth()->user()->id;

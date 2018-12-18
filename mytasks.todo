@@ -2,8 +2,8 @@ My tasks:
 
 Homepage (index.html):
 ✔ Query last 3 entries per user @done(2018-12-14 17:14)
-☐ Pagination
-☐ Each entry: link to user page author, next to entry, public
+✔ Pagination @done(2018-12-17 23:32)
+✔ Each entry: link to user page author, next to entry, public @done(2018-12-17 23:32)
 ✔ Edit entry link for logged user @done(2018-12-14 17:14)
 
 Single User entry page:
@@ -16,6 +16,6 @@ Header:
 ☐
 
 Twitter sidebar:
-☐ Show hide/unhide for each tweets @ajax
-☐ Hidden tweet shown  @onlyLogged
-☐ Db store hidden tweets
+✔ Show hide/unhide for each tweets @ajax @done(2018-12-17 23:32)
+✔ Hidden tweet shown  @onlyLogged @done(2018-12-17 23:32)
+✔ Db store hidden tweets @done(2018-12-17 23:32)

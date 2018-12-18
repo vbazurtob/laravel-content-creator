@@ -16,7 +16,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+
+      // $this->middleware('guest');
+
+      $this->middleware('auth')->except('index');
     }
 
     /**
@@ -32,11 +35,10 @@ class HomeController extends Controller
 
         return view('home')
          ->with( 'lastEntries', $lastEntries )
-        // ->with('lastEntries', $lastEntries['data'])
-        // ->with('pagination', $lastEntries['pagination'])
 
         ;
     }
+
 
 
 }
