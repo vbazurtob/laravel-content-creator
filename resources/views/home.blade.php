@@ -20,7 +20,7 @@
         </div>
 
         @if(Auth::user()->id == $entry->author)
-        <a href="/entry/{{$entry->id}}" class="card-link">Edit</a>
+        <a href="/entry/{{$entry->entry_id}}" class="card-link">Edit</a>
         @endif
       </div>
 
@@ -31,5 +31,6 @@
   @endforeach
 </div>
 
+{{ $lastEntries->links() }}
 
 @endsection

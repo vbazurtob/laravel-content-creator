@@ -30,7 +30,12 @@ class HomeController extends Controller
       $entry = new Entry();
       $lastEntries = $entry->getLastThreeEntriesAll();
 
-        return view('home')->with('lastEntries', $lastEntries);
+        return view('home')
+         ->with( 'lastEntries', $lastEntries )
+        // ->with('lastEntries', $lastEntries['data'])
+        // ->with('pagination', $lastEntries['pagination'])
+
+        ;
     }
 
 
