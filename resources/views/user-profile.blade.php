@@ -27,7 +27,7 @@
               </div>
             </div>
             @if(Auth::user()->id == $entry->author)
-            <a href="/entry/{{$entry->id}}" class="card-link">Edit</a>
+            <a href="/entry/{{$entry->id}}" class="card-link"><i class="fas fa-edit"></i> Edit</a>
             @endif
           </div>
 
@@ -53,7 +53,6 @@
 <script type="text/javascript" src="/js/twittercode.js">
 </script>
   <script type="text/javascript">
-    // console.log( $('.tweets-container') );
     $(document).ready(function(){
       getTweets( "{{$user->id}}" );
     });

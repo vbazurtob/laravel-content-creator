@@ -21,7 +21,7 @@
 
         @auth
           @if(Auth::user()->id == $entry->author)
-            <a href="/entry/{{$entry->entry_id}}" class="card-link">Edit</a>
+            <a href="/entry/{{$entry->entry_id}}" class="card-link"><i class="fas fa-sign-out-alt"></i> Edit</a>
           @endif
         @endauth
       </div>
@@ -32,7 +32,11 @@
 
   @endforeach
 </div>
+<div id="paginator-links-container" class="row">
+  <span class="col">&nbsp;</span>
+  <span class="col-8 flex-row-center" >{{ $lastEntries->links() }}</span>
+  <span class="col">&nbsp;</span>
 
-{{ $lastEntries->links() }}
+</div>
 
 @endsection
